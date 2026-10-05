@@ -23,6 +23,13 @@ Those roles can only read their own repo's values and the org values visible
 to the repo. The AWS credentials stay inside the action and are not exported
 to later steps.
 
+### Getting access
+
+zodl-inc developers: the full runbook (AWS secrets user, setting values,
+migrating workflows) is in zodl-inc/github-config
+[`docs/developer-secrets.md`](https://github.com/zodl-inc/github-config/blob/main/docs/developer-secrets.md).
+To set secret values for your repos, ask **@y4ssi** for an AWS secrets user.
+
 ### Usage
 
 ```yaml
