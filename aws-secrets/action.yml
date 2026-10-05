@@ -17,9 +17,9 @@ inputs:
     default: ""
   environment:
     description: >
-      GitHub environment of the job (`${{ github.job_environment }}` is not
-      available, so pass the same name as `environment:`). Needed for
-      environment secrets; the job must run in that environment.
+      GitHub environment of the job: pass the same name as the job's
+      `environment:`. Needed for environment secrets; the job must run in
+      that environment.
     default: ""
   aws-region:
     description: AWS region of the values.
