@@ -1,0 +1,38 @@
+name: aws-secrets
+description: >
+  Read this repository's GitHub Actions secrets and variables from AWS
+  (Secrets Manager and SSM Parameter Store, managed in zodl-inc/github-config)
+  and export them as environment variables for the next steps. Secrets are
+  masked. The job needs `permissions: id-token: write`.
+
+inputs:
+  secrets:
+    description: >
+      Secrets to export, one per line: `NAME`, or `ENV_NAME=NAME` to export
+      under another name. Looked up in the environment's container (when
+      `environment` is set), then the repo's, then the org's.
+    default: ""
+  vars:
+    description: Variables to export, one per line, same syntax. Looked up in the environment, then the repo, then the org.
+    default: ""
+  environment:
+    description: >
+      GitHub environment of the job (`${{ github.job_environment }}` is not
+      available, so pass the same name as `environment:`). Needed for
+      environment secrets; the job must run in that environment.
+    default: ""
+  aws-region:
+    description: AWS region of the values.
+    default: us-east-1
+
+runs:
+  using: composite
+  steps:
+    - name: Read secrets and variables from AWS
+      shell: bash
+      env:
+        INPUT_SECRETS: ${{ inputs.secrets }}
+        INPUT_VARS: ${{ inputs.vars }}
+        INPUT_ENVIRONMENT: ${{ inputs.environment }}
+        AWS_REGION: ${{ inputs.aws-region }}
+      run: '"$GITHUB_ACTION_PATH/aws-secrets.sh"'
